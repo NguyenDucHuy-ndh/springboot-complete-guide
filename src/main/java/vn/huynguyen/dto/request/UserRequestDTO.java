@@ -1,6 +1,8 @@
 package vn.huynguyen.dto.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +25,8 @@ public class UserRequestDTO implements Serializable {
     private String firstName;
 
     private String lastName;
+
+    @Email
     private String email;
 
     //@Pattern(regexp = "^\\+?[0-9]{8,15}$", message = "Phone number must be between 10 and 15 digits")
@@ -35,6 +39,7 @@ public class UserRequestDTO implements Serializable {
     @EnumValue(name = "gender", enumClass = Gender.class)
     private Gender gender;
 
+    @NotNull(message = "userType is required")
     @EnumValue(name = "userType", enumClass = UserType.class)
-    private UserType userType;
+    private String userType;
 }

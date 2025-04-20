@@ -6,22 +6,31 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class EnumValueValidator implements ConstraintValidator<EnumValue, CharSequence> {
+public class EnumValueValidator implements ConstraintValidator<EnumValue, Object> {
     private List<String> acceptedValues;
+    private Class<? extends Enum<?>> enumClass;
 
     @Override
     public void initialize(EnumValue enumValue) {
-        acceptedValues = Stream.of(enumValue.enumClass().getEnumConstants())
+        this.enumClass = enumValue.enumClass();
+        acceptedValues = Stream.of(enumClass.getEnumConstants())
                 .map(Enum::name)
                 .toList();
     }
 
     @Override
-    public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }
+        if (value instanceof Enum) {
+            return true; // Nếu đã là enum, tự động hợp lệ
+        }
 
-        return acceptedValues.contains(value.toString().toUpperCase());
+        if (value instanceof CharSequence) {
+            return acceptedValues.contains(value.toString().toUpperCase());
+        }
+
+        return false;
     }
 }
