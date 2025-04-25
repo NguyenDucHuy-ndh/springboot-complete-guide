@@ -1,0 +1,28 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:123456}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+springdoc:
+  api-docs:
+    enable: true
+  swagger-ui:
+    enable: true
+open:
+  api:
+    title: Your API Title
+    version: 1.0.0
+    description: Your API Description
+    serverUrl: http://localhost:${server.port}
+    serverName: Local Server

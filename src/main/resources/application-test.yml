@@ -1,0 +1,13 @@
+server:
+  port: 8080
+spring:
+  config:
+    activate:
+      on-profile: test
+open:
+  api:
+    title: Your API Title
+    version: 1.0.0
+    description: Your API Description
+    serverUrl: http://localhost:${server.port}
+    serverName: Local Server
